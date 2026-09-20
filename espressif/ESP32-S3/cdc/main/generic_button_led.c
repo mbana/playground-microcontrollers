@@ -1,18 +1,6 @@
-/*
- * SPDX-FileCopyrightText: 2021-2025 Espressif Systems (Shanghai) CO LTD
- *
- * SPDX-License-Identifier: CC0-1.0
- */
-
-/*
+/***
  * Taken from
  * https://components.espressif.com/components/espressif/esp_bsp_generic/versions/3.1.1/examples/generic_button_led?language=.
- */
-
-/**
- * @file
- * @brief BSP Generic Button and LED Example
- * @details Minimal example using the Generic BSP: button and LED control
  */
 
 #include "generic_button_led.h"

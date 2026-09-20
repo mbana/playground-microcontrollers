@@ -1,5 +1,5 @@
 {
-  "idf.currentSetup": "${userHome}/.espressif/master/esp-idf",
+  "idf.currentSetup": "/home/mbana/.espressif/master/esp-idf",
   "idf.customExtraVars": {},
   "idf.openOcdConfigs": [
     "board/esp32s3-bridge.cfg"
@@ -31,5 +31,6 @@
   "idf.extensionActivationMode": "always",
   "idf.sdkconfigDefaults": [
     "sdkconfig.esp32_s3_devkitc_1"
-  ]
+  ],
+  "idf.enableCCache": true
 }
