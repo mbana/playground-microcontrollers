@@ -1,0 +1,28 @@
+path = "/home/mbana/.espressif"
+esp_idf_json_path = "/home/mbana/.espressif/tools"
+tool_download_folder_name = "/home/mbana/.espressif/dist"
+tool_install_folder_name = "/home/mbana/.espressif/tools"
+target = ["esp32s3"]
+idf_versions = ["master"]
+tools_json_file = "tools/tools.json"
+config_file_save_path = "/home/mbana/dev/github/mbana/playground-microcontrollers/espressif/ESP32-S3/eim_config.toml"
+non_interactive = true
+wizard_all_questions = false
+mirror = "https://github.com"
+idf_mirror = "https://github.com"
+pypi_mirror = "https://pypi.org/simple"
+recurse_submodules = true
+install_all_prerequisites = false
+skip_prerequisites_check = false
+cleanup = false
+skip_components_download = false
+python_env_folder_name = "python"
+activation_script_path_override = "/home/mbana/.espressif/tools"
+python_version_override = "python313"
+create_bat_activation_script = false
+
+[idf_features_per_version]
+master = ["core", "test-specific", "ci", "docs", "ide", "mcp"]
+
+[idf_tools_per_version]
+master = ["xtensa-esp-elf-gdb", "xtensa-esp-elf", "esp-clang", "esp-clang-libs", "riscv32-esp-elf", "esp32ulp-elf", "openocd-esp32", "ninja", "esp-rom-elfs", "esp-clangd", "esp-idf-configdep", "qemu-xtensa", "cmake"]

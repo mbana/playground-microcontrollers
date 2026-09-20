@@ -1,0 +1,35 @@
+{
+  "idf.currentSetup": "${userHome}/.espressif/master/esp-idf",
+  "idf.customExtraVars": {},
+  "idf.openOcdConfigs": [
+    "board/esp32s3-bridge.cfg"
+  ],
+  "idf.flashType": "UART",
+  "idf.port": "/dev/ttyACM0",
+  "clangd.path": "/usr/bin/clangd",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=${workspaceFolder}/build"
+  ],
+  "editor.formatOnSave": false,
+  "[c]": {
+    "editor.defaultFormatter": "clang-format.vscode-clang-format"
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "clang-format.vscode-clang-format"
+  },
+  "clang-format.executable": "/usr/bin/clang-format",
+  "clang-format.fallbackStyle": "LLVM",
+  "clang-format.language.c.enable": true,
+  "clang-format.language.cpp.enable": true,
+  "idf.notificationMode": "All",
+  "idf.useIDFKconfigStyle": true,
+  "idf.showOnboardingOnInit": true,
+  "idf.saveLastProjectConfiguration": true,
+  "idf.enableIdfComponentManager": true,
+  "idf.extensionActivationMode": "always",
+  "idf.sdkconfigDefaults": [
+    "sdkconfig.esp32_s3_devkitc_1"
+  ]
+}
