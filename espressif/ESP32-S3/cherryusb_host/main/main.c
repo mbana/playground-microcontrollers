@@ -21,7 +21,7 @@
 #include "usbh_core.h"
 #include "usbh_hid.h"
 
-static char *TAG = "HOST";
+static char *TAG = __FILE_NAME__;
 
 void app_main(void)
 {

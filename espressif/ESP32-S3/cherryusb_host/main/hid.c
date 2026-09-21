@@ -14,7 +14,7 @@
 #include "usbh_core.h"
 #include "usbh_hid.h"
 
-static char *TAG = "HID";
+static char *TAG = __FILE_NAME__;
 
 typedef struct {
     bool is_active;

@@ -1,0 +1,46 @@
+[package]
+edition = "2024"
+name = "cherryusb_host-rs"
+rust-version = "1.95"
+version = "0.1.0"
+
+[[bin]]
+name = "cherryusb_host-rs"
+path = "./src/bin/main.rs"
+
+[dependencies]
+esp-hal = { version = ">=1.2.2", features = [
+    "esp32s3",
+    "log-04",
+    "unstable",
+    "__usb_otg",
+    "rt",
+] }
+esp-bootloader-esp-idf = { version = ">=0.6.0", features = ["esp32s3", "log-04"] }
+log = ">=0.4.27"
+critical-section = "1.2.0"
+esp-println = { version = ">=0.14.0", features = ["esp32s3", "log-04"] }
+esp-backtrace = { version = ">=0.16.0", features = [
+    "esp32s3",
+    "panic-handler",
+    "println",
+] }
+esp-idf-svc = { version = ">=0.50.1" }
+
+anyhow      = ">=1.0.104"
+rgb         = ">=0.8.29"
+
+[build-dependencies]
+embuild = ">=0.33.0"
+
+# For fine tuning these settings, please refer to https://doc.rust-lang.org/cargo/reference/profiles.html
+[profile.dev]
+# The default debug profile is too slow and too big for resource-constrained devices.
+# Always build with some optimizations enabled.
+opt-level = "s"
+
+[profile.release]
+codegen-units = 1 # LLVM can perform better optimizations using a single thread
+debug = 2         # prefer slower builds but better debugging experience
+lto = 'fat'
+opt-level = 's'

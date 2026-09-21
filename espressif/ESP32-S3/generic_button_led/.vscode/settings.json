@@ -1,0 +1,15 @@
+{
+  "idf.currentSetup": "/home/mbana/.espressif/master/esp-idf",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3",
+    "ADF_PATH": "/home/mbana/.espressif/tools/esp-adf"
+  },
+  "clangd.path": "/home/mbana/.espressif/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=/home/mbana/dev/github/mbana/playground-microcontrollers/espressif/ESP32-S3/generic_button_led/build"
+  ],
+  "idf.port": "/dev/ttyACM0",
+  "idf.flashType": "UART"
+}

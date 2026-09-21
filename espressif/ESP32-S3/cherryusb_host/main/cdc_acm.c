@@ -29,7 +29,7 @@
 #include "usbh_pl2303.h"
 #endif
 
-static char *TAG = "CDC_ACM";
+static char *TAG = __FILE_NAME__;
 
 #define RINGBUF_SIZE 1024
 static RingbufHandle_t s_recv_ringbuf = NULL;

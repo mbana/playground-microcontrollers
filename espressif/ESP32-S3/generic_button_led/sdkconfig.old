@@ -1,6 +1,6 @@
 #
 # Automatically generated file. DO NOT EDIT.
-# Espressif IoT Development Framework (ESP-IDF) 6.2.0 Project Configuration
+# Espressif IoT Development Framework (ESP-IDF) 6.1.0 Project Configuration
 #
 # default:
 CONFIG_SOC_ADC_SUPPORTED=y
@@ -161,7 +161,11 @@ CONFIG_SOC_ADC_DMA_SUPPORTED=y
 # default:
 CONFIG_SOC_ADC_PERIPH_NUM=2
 # default:
+CONFIG_SOC_ADC_MAX_CHANNEL_NUM=10
+# default:
 CONFIG_SOC_ADC_ATTEN_NUM=4
+# default:
+CONFIG_SOC_ADC_DIGI_CONTROLLER_NUM=2
 # default:
 CONFIG_SOC_ADC_PATT_LEN_MAX=24
 # default:
@@ -173,7 +177,17 @@ CONFIG_SOC_ADC_DIGI_RESULT_BYTES=4
 # default:
 CONFIG_SOC_ADC_DIGI_DATA_BYTES_PER_CONV=4
 # default:
+CONFIG_SOC_ADC_DIGI_IIR_FILTER_NUM=2
+# default:
 CONFIG_SOC_ADC_DIGI_MONITOR_NUM=2
+# default:
+CONFIG_SOC_ADC_SAMPLE_FREQ_THRES_HIGH=83333
+# default:
+CONFIG_SOC_ADC_SAMPLE_FREQ_THRES_LOW=611
+# default:
+CONFIG_SOC_ADC_RTC_MIN_BITWIDTH=12
+# default:
+CONFIG_SOC_ADC_RTC_MAX_BITWIDTH=12
 # default:
 CONFIG_SOC_ADC_CALIBRATION_V1_SUPPORTED=y
 # default:
@@ -332,8 +346,6 @@ CONFIG_SOC_SPI_MAXIMUM_BUFFER_SIZE=64
 CONFIG_SOC_SPI_SUPPORT_SLAVE_HD_VER2=y
 # default:
 CONFIG_SOC_SPI_SUPPORT_OCT=y
-# default:
-CONFIG_SOC_SPI_SUPPORT_DDR_CLOCK=y
 # default:
 CONFIG_SOC_SPIRAM_SUPPORTED=y
 # default:
@@ -615,7 +627,7 @@ CONFIG_IDF_TARGET_ARCH="xtensa"
 # default:
 CONFIG_IDF_TARGET="esp32s3"
 # default:
-CONFIG_IDF_INIT_VERSION="6.2.0"
+CONFIG_IDF_INIT_VERSION="6.1.0"
 # default:
 CONFIG_IDF_TARGET_ESP32S3=y
 # default:
@@ -649,6 +661,11 @@ CONFIG_APP_BUILD_USE_FLASH_SECTIONS=y
 # end of Build type
 
 #
+# App Update config
+#
+# end of App Update config
+
+#
 # Bootloader config
 #
 
@@ -665,11 +682,7 @@ CONFIG_BOOTLOADER_PROJECT_VER=1
 # Application Rollback
 #
 # default:
-CONFIG_BOOTLOADER_APP_ROLLBACK=y
-# default:
-CONFIG_BOOTLOADER_APP_ROLLBACK_CONFIRM_ON_STARTUP=y
-# default:
-# CONFIG_BOOTLOADER_APP_ROLLBACK_CONFIRM_BY_APP is not set
+# CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE is not set
 # end of Application Rollback
 
 #
@@ -842,8 +855,6 @@ CONFIG_ESP_ROM_HAS_NEWLIB_NANO_FORMAT=y
 # default:
 CONFIG_ESP_ROM_HAS_NEWLIB_32BIT_TIME=y
 # default:
-CONFIG_ESP_ROM_HAS_LIBGCC=y
-# default:
 CONFIG_ESP_ROM_NEEDS_SET_CACHE_MMU_SIZE=y
 # default:
 CONFIG_ESP_ROM_RAM_APP_NEEDS_MMU_INIT=y
@@ -992,12 +1003,6 @@ CONFIG_COMPILER_HIDE_PATHS_MACROS=y
 # default:
 # CONFIG_COMPILER_CXX_RTTI is not set
 # default:
-CONFIG_COMPILER_CXX_TRIVIAL_AUTO_VAR_INIT_UNINITIALIZED=y
-# default:
-# CONFIG_COMPILER_CXX_TRIVIAL_AUTO_VAR_INIT_PATTERN is not set
-# default:
-# CONFIG_COMPILER_CXX_TRIVIAL_AUTO_VAR_INIT_ZERO is not set
-# default:
 CONFIG_COMPILER_STACK_CHECK_MODE_NONE=y
 # default:
 # CONFIG_COMPILER_STACK_CHECK_MODE_NORM is not set
@@ -1025,8 +1030,6 @@ CONFIG_COMPILER_STACK_CHECK_MODE_NONE=y
 CONFIG_COMPILER_RT_LIB_GCCLIB=y
 # default:
 CONFIG_COMPILER_RT_LIB_NAME="gcc"
-# default:
-# CONFIG_COMPILER_LTO_LINKTIME is not set
 # default:
 CONFIG_COMPILER_ORPHAN_SECTIONS_ERROR=y
 # default:
@@ -1084,8 +1087,6 @@ CONFIG_COMPILER_CXX_GLIBCXX_CONSTEXPR_NO_CHANGE=y
 #
 # eFuse Bit Manager
 #
-# default:
-# CONFIG_EFUSE_ENABLE_STAGED_TOKEN_API is not set
 # default:
 # CONFIG_EFUSE_CUSTOM_TABLE is not set
 # default:
@@ -1216,8 +1217,6 @@ CONFIG_SPI_SLAVE_ISR_IN_IRAM=y
 #
 # default:
 # CONFIG_UHCI_ISR_HANDLER_IN_IRAM is not set
-# default:
-# CONFIG_UHCI_RECV_FUNC_IN_IRAM is not set
 # default:
 # CONFIG_UHCI_ISR_CACHE_SAFE is not set
 # default:
@@ -1445,41 +1444,6 @@ CONFIG_LIBC_ASSERT_BUFFER_SIZE=200
 # default:
 # CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS is not set
 # end of ESP-MM: Memory Management Configurations
-
-#
-# MSPI Flash configuration
-#
-
-#
-# SPI Flash behavior when brownout
-#
-# default:
-CONFIG_SPI_FLASH_BROWNOUT_RESET_XMC=y
-# default:
-CONFIG_SPI_FLASH_BROWNOUT_RESET=y
-# end of SPI Flash behavior when brownout
-
-#
-# Optional and Experimental MSPI Features (READ DOCS FIRST)
-#
-
-#
-# Features here require specific hardware (READ DOCS FIRST!)
-#
-# default:
-# CONFIG_SPI_FLASH_HPM_ENA is not set
-# default:
-CONFIG_SPI_FLASH_HPM_AUTO=y
-# default:
-# CONFIG_SPI_FLASH_HPM_DIS is not set
-# default:
-CONFIG_SPI_FLASH_HPM_ON=y
-# default:
-CONFIG_SPI_FLASH_HPM_DC_AUTO=y
-# default:
-# CONFIG_SPI_FLASH_HPM_DC_DISABLE is not set
-# end of Optional and Experimental MSPI Features (READ DOCS FIRST)
-# end of MSPI Flash configuration
 
 #
 # Partition API Configuration
@@ -1941,8 +1905,6 @@ CONFIG_FREERTOS_SYSTICK_USES_SYSTIMER=y
 # CONFIG_FREERTOS_IN_IRAM is not set
 # default:
 # CONFIG_FREERTOS_CHECK_PORT_CRITICAL_COMPLIANCE is not set
-# default:
-# CONFIG_FREERTOS_PORT_THREAD_SAFE_CLAIM is not set
 # end of Port
 
 #
@@ -2089,6 +2051,371 @@ CONFIG_LOG_IN_IRAM=y
 # end of Log
 
 #
+# mbedTLS
+#
+
+#
+# Core Configuration
+#
+# default:
+CONFIG_MBEDTLS_VER_4_X_SUPPORT=y
+# default:
+# CONFIG_MBEDTLS_COMPILER_OPTIMIZATION_NONE is not set
+# default:
+CONFIG_MBEDTLS_COMPILER_OPTIMIZATION_SIZE=y
+# default:
+# CONFIG_MBEDTLS_COMPILER_OPTIMIZATION_PERF is not set
+# default:
+CONFIG_MBEDTLS_FS_IO=y
+# default:
+# CONFIG_MBEDTLS_PSA_ITS_CUSTOM_STORAGE_BACKEND is not set
+# default:
+CONFIG_MBEDTLS_THREADING_C=y
+# default:
+# CONFIG_MBEDTLS_THREADING_ALT is not set
+# default:
+CONFIG_MBEDTLS_THREADING_PTHREAD=y
+# default:
+CONFIG_MBEDTLS_ERROR_STRINGS=y
+# default:
+CONFIG_MBEDTLS_VERSION_C=y
+# default:
+CONFIG_MBEDTLS_HAVE_TIME=y
+# default:
+# CONFIG_MBEDTLS_PLATFORM_TIME_ALT is not set
+# default:
+# CONFIG_MBEDTLS_HAVE_TIME_DATE is not set
+# default:
+CONFIG_MBEDTLS_INTERNAL_MEM_ALLOC=y
+# default:
+# CONFIG_MBEDTLS_DEFAULT_MEM_ALLOC is not set
+# default:
+# CONFIG_MBEDTLS_CUSTOM_MEM_ALLOC is not set
+# default:
+CONFIG_MBEDTLS_ASYMMETRIC_CONTENT_LEN=y
+# default:
+CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN=16384
+# default:
+CONFIG_MBEDTLS_SSL_OUT_CONTENT_LEN=4096
+# default:
+# CONFIG_MBEDTLS_DYNAMIC_BUFFER is not set
+# default:
+# CONFIG_MBEDTLS_VERSION_FEATURES is not set
+# default:
+# CONFIG_MBEDTLS_DEBUG is not set
+# default:
+CONFIG_MBEDTLS_SELF_TEST=y
+# end of Core Configuration
+
+#
+# Certificates
+#
+# default:
+CONFIG_MBEDTLS_X509_USE_C=y
+# default:
+CONFIG_MBEDTLS_PEM_PARSE_C=y
+# default:
+CONFIG_MBEDTLS_PEM_WRITE_C=y
+# default:
+CONFIG_MBEDTLS_PK_C=y
+# default:
+CONFIG_MBEDTLS_PK_PARSE_C=y
+# default:
+CONFIG_MBEDTLS_PK_WRITE_C=y
+# default:
+# CONFIG_MBEDTLS_X509_REMOVE_INFO is not set
+# default:
+CONFIG_MBEDTLS_X509_CRL_PARSE_C=y
+# default:
+CONFIG_MBEDTLS_X509_CRT_PARSE_C=y
+# default:
+CONFIG_MBEDTLS_X509_CSR_PARSE_C=y
+# default:
+# CONFIG_MBEDTLS_X509_CREATE_C is not set
+# default:
+CONFIG_MBEDTLS_X509_RSASSA_PSS_SUPPORT=y
+# default:
+# CONFIG_MBEDTLS_X509_TRUSTED_CERT_CALLBACK is not set
+# default:
+CONFIG_MBEDTLS_ASN1_PARSE_C=y
+# default:
+CONFIG_MBEDTLS_ASN1_WRITE_C=y
+# default:
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
+
+#
+# Certificate Bundle Configuration
+#
+# default:
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=y
+# default:
+# CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN is not set
+# default:
+# CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_NONE is not set
+# default:
+# CONFIG_MBEDTLS_CUSTOM_CERTIFICATE_BUNDLE is not set
+# default:
+# CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEPRECATED_LIST is not set
+# default:
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_MAX_CERTS=200
+# end of Certificate Bundle Configuration
+
+# default:
+# CONFIG_MBEDTLS_ALLOW_WEAK_CERTIFICATE_VERIFICATION is not set
+# default:
+# CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_CROSS_SIGNED_VERIFY is not set
+# end of Certificates
+
+# default:
+CONFIG_MBEDTLS_TLS_ENABLED=y
+
+#
+# TLS Protocol Configuration
+#
+# default:
+CONFIG_MBEDTLS_SSL_PROTO_TLS1_2=y
+# default:
+# CONFIG_MBEDTLS_SSL_PROTO_TLS1_3 is not set
+# default:
+# CONFIG_MBEDTLS_SSL_PROTO_GMTSSL1_1 is not set
+# default:
+CONFIG_MBEDTLS_TLS_SERVER=y
+# default:
+CONFIG_MBEDTLS_TLS_CLIENT=y
+# default:
+CONFIG_MBEDTLS_TLS_SERVER_AND_CLIENT=y
+# default:
+# CONFIG_MBEDTLS_TLS_SERVER_ONLY is not set
+# default:
+# CONFIG_MBEDTLS_TLS_CLIENT_ONLY is not set
+# default:
+# CONFIG_MBEDTLS_SSL_KEEP_PEER_CERTIFICATE is not set
+# default:
+# CONFIG_MBEDTLS_SSL_CONTEXT_SERIALIZATION is not set
+# default:
+CONFIG_MBEDTLS_SSL_CACHE_C=y
+# default:
+CONFIG_MBEDTLS_SSL_ALL_ALERT_MESSAGES=y
+
+#
+# TLS Key Exchange Configuration
+#
+# default:
+# CONFIG_MBEDTLS_PSK_MODES is not set
+# default:
+CONFIG_MBEDTLS_KEY_EXCHANGE_RSA=y
+# default:
+CONFIG_MBEDTLS_KEY_EXCHANGE_ELLIPTIC_CURVE=y
+# default:
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDHE_RSA=y
+# default:
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA=y
+# end of TLS Key Exchange Configuration
+
+# default:
+CONFIG_MBEDTLS_SSL_SERVER_NAME_INDICATION=y
+# default:
+CONFIG_MBEDTLS_SSL_ALPN=y
+# default:
+CONFIG_MBEDTLS_SSL_MAX_FRAGMENT_LENGTH=y
+# default:
+# CONFIG_MBEDTLS_SSL_VARIABLE_BUFFER_LENGTH is not set
+# default:
+CONFIG_MBEDTLS_SSL_RENEGOTIATION=y
+# default:
+CONFIG_MBEDTLS_CLIENT_SSL_SESSION_TICKETS=y
+# default:
+CONFIG_MBEDTLS_SERVER_SSL_SESSION_TICKETS=y
+# default:
+# CONFIG_MBEDTLS_SSL_KEYING_MATERIAL_EXPORT is not set
+# end of TLS Protocol Configuration
+
+# default:
+# CONFIG_MBEDTLS_SSL_PROTO_DTLS is not set
+
+#
+# Symmetric Ciphers
+#
+# default:
+CONFIG_MBEDTLS_AES_C=y
+# default:
+# CONFIG_MBEDTLS_CAMELLIA_C is not set
+# default:
+# CONFIG_MBEDTLS_ARIA_C is not set
+# default:
+# CONFIG_MBEDTLS_DES_C is not set
+# default:
+CONFIG_MBEDTLS_CCM_C=y
+# default:
+CONFIG_MBEDTLS_CIPHER_MODE_CBC=y
+# default:
+CONFIG_MBEDTLS_CIPHER_MODE_CFB=y
+# default:
+CONFIG_MBEDTLS_CIPHER_MODE_CTR=y
+# default:
+CONFIG_MBEDTLS_CIPHER_MODE_OFB=y
+# default:
+CONFIG_MBEDTLS_CIPHER_MODE_XTS=y
+# default:
+CONFIG_MBEDTLS_GCM_C=y
+# default:
+# CONFIG_MBEDTLS_NIST_KW_C is not set
+# default:
+CONFIG_MBEDTLS_AES_ROM_TABLES=y
+# default:
+# CONFIG_MBEDTLS_AES_FEWER_TABLES is not set
+# default:
+# CONFIG_MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH is not set
+# default:
+CONFIG_MBEDTLS_CMAC_C=y
+# end of Symmetric Ciphers
+
+#
+# Asymmetric Ciphers
+#
+# default:
+CONFIG_MBEDTLS_RSA_C=y
+# default:
+CONFIG_MBEDTLS_ECP_C=y
+
+#
+# Supported Curves
+#
+# default:
+CONFIG_MBEDTLS_ECP_DP_SECP256R1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_SECP384R1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_SECP521R1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_SECP256K1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_BP256R1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_BP384R1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_BP512R1_ENABLED=y
+# default:
+CONFIG_MBEDTLS_ECP_DP_CURVE25519_ENABLED=y
+# end of Supported Curves
+
+#
+# Elliptic Curve Ciphers Configuration
+#
+# default:
+CONFIG_MBEDTLS_ECP_NIST_OPTIM=y
+# default:
+# CONFIG_MBEDTLS_ECP_FIXED_POINT_OPTIM is not set
+# default:
+# CONFIG_MBEDTLS_DHM_C is not set
+# default:
+CONFIG_MBEDTLS_ECDH_C=y
+# default:
+# CONFIG_MBEDTLS_ECJPAKE_C is not set
+# default:
+CONFIG_MBEDTLS_ECDSA_C=y
+# default:
+CONFIG_MBEDTLS_PK_PARSE_EC_EXTENDED=y
+# default:
+CONFIG_MBEDTLS_PK_PARSE_EC_COMPRESSED=y
+# default:
+CONFIG_MBEDTLS_ECDSA_DETERMINISTIC=y
+# default:
+# CONFIG_MBEDTLS_ECP_RESTARTABLE is not set
+# end of Elliptic Curve Ciphers Configuration
+# end of Asymmetric Ciphers
+
+#
+# Hash functions
+#
+# default:
+# CONFIG_MBEDTLS_RIPEMD160_C is not set
+# default:
+CONFIG_MBEDTLS_MD_C=y
+# default:
+CONFIG_MBEDTLS_MD5_C=y
+# default:
+CONFIG_MBEDTLS_SHA1_C=y
+# default:
+# CONFIG_MBEDTLS_SHA224_C is not set
+# default:
+CONFIG_MBEDTLS_SHA256_C=y
+# default:
+CONFIG_MBEDTLS_SHA384_C=y
+# default:
+CONFIG_MBEDTLS_SHA512_C=y
+# default:
+# CONFIG_MBEDTLS_SHA3_C is not set
+# default:
+CONFIG_MBEDTLS_ROM_MD5=y
+# end of Hash functions
+
+#
+# Hardware Acceleration
+#
+# default:
+CONFIG_MBEDTLS_HARDWARE_SHA=y
+# default:
+CONFIG_MBEDTLS_HARDWARE_MPI=y
+# default:
+CONFIG_MBEDTLS_LARGE_KEY_SOFTWARE_MPI=y
+# default:
+CONFIG_MBEDTLS_MPI_USE_INTERRUPT=y
+# default:
+CONFIG_MBEDTLS_MPI_INTERRUPT_LEVEL=0
+# default:
+CONFIG_MBEDTLS_HARDWARE_AES=y
+# default:
+# CONFIG_MBEDTLS_AES_SOFT_FALLBACK is not set
+# default:
+CONFIG_MBEDTLS_GCM_SUPPORT_NON_AES_CIPHER=y
+# default:
+CONFIG_MBEDTLS_AES_USE_INTERRUPT=y
+# default:
+CONFIG_MBEDTLS_AES_INTERRUPT_LEVEL=0
+# default:
+CONFIG_MBEDTLS_AES_HW_SMALL_DATA_LEN_OPTIM=y
+# default:
+# CONFIG_MBEDTLS_SECURE_ELEMENT_DRIVER_ENABLED is not set
+# default:
+# CONFIG_MBEDTLS_HARDWARE_RSA_DS_PERIPHERAL is not set
+# end of Hardware Acceleration
+
+#
+# Entropy and Random Number Generation
+#
+# default:
+# CONFIG_MBEDTLS_ENTROPY_FORCE_SHA256 is not set
+# default:
+CONFIG_MBEDTLS_CTR_DRBG_C=y
+# default:
+CONFIG_MBEDTLS_HMAC_DRBG_C=y
+# end of Entropy and Random Number Generation
+
+#
+# Encoding/Decoding
+#
+# default:
+CONFIG_MBEDTLS_BASE64_C=y
+# default:
+CONFIG_MBEDTLS_PKCS5_C=y
+# default:
+CONFIG_MBEDTLS_PKCS7_C=y
+# default:
+CONFIG_MBEDTLS_PKCS1_V15=y
+# default:
+CONFIG_MBEDTLS_PKCS1_V21=y
+# end of Encoding/Decoding
+
+#
+# Stream Cipher
+#
+# default:
+# CONFIG_MBEDTLS_CHACHA20_C is not set
+# end of Stream Cipher
+# end of mbedTLS
+
+#
 # PThreads
 #
 # default:
@@ -2114,8 +2441,6 @@ CONFIG_PTHREAD_TASK_NAME_DEFAULT="pthread"
 #
 # default:
 CONFIG_SD_ENABLE_SDIO_SUPPORT=y
-# default:
-CONFIG_SD_READY_POLL_PERIOD_START_US=100
 # end of SD Protocol Layer Configuration
 
 #
@@ -2130,12 +2455,37 @@ CONFIG_MMU_PAGE_SIZE=0x10000
 # end of MMU Config
 
 #
-# Optional and Experimental SPI Flash Features (READ DOCS FIRST)
+# Main Flash configuration
+#
+
+#
+# SPI Flash behavior when brownout
+#
+# default:
+CONFIG_SPI_FLASH_BROWNOUT_RESET_XMC=y
+# default:
+CONFIG_SPI_FLASH_BROWNOUT_RESET=y
+# end of SPI Flash behavior when brownout
+
+#
+# Optional and Experimental Features (READ DOCS FIRST)
 #
 
 #
 # Features here require specific hardware (READ DOCS FIRST!)
 #
+# default:
+# CONFIG_SPI_FLASH_HPM_ENA is not set
+# default:
+CONFIG_SPI_FLASH_HPM_AUTO=y
+# default:
+# CONFIG_SPI_FLASH_HPM_DIS is not set
+# default:
+CONFIG_SPI_FLASH_HPM_ON=y
+# default:
+CONFIG_SPI_FLASH_HPM_DC_AUTO=y
+# default:
+# CONFIG_SPI_FLASH_HPM_DC_DISABLE is not set
 # default:
 # CONFIG_SPI_FLASH_AUTO_SUSPEND is not set
 # default:
@@ -2146,7 +2496,8 @@ CONFIG_SPI_FLASH_SUSPEND_TSUS_VAL_US=50
 # CONFIG_SPI_FLASH_FORCE_ENABLE_C6_H2_SUSPEND is not set
 # default:
 CONFIG_SPI_FLASH_PLACE_FUNCTIONS_IN_IRAM=y
-# end of Optional and Experimental SPI Flash Features (READ DOCS FIRST)
+# end of Optional and Experimental Features (READ DOCS FIRST)
+# end of Main Flash configuration
 
 #
 # SPI Flash driver
@@ -2402,9 +2753,9 @@ CONFIG_BSP_LED_TYPE_RGB=y
 # default:
 CONFIG_ENV_MAX_LEDS=1
 CONFIG_BSP_LEDS_NUM=1
-CONFIG_BSP_LED_RGB_GPIO=18
+CONFIG_BSP_LED_RGB_GPIO=48
 # default:
-CONFIG_BSP_ESP_IDF_VERSION="6.2"
+CONFIG_BSP_ESP_IDF_VERSION="6.1"
 CONFIG_BSP_LED_RGB_BACKEND_RMT=y
 # CONFIG_BSP_LED_RGB_BACKEND_SPI is not set
 # end of LEDs
@@ -3257,7 +3608,6 @@ CONFIG_LV_BUILD_DEMOS=y
 # CONFIG_APP_BUILD_TYPE_ELF_RAM is not set
 # CONFIG_NO_BLOBS is not set
 # CONFIG_APP_ROLLBACK_ENABLE is not set
-# CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE is not set
 # CONFIG_BOOTLOADER_COMPILER_OPTIMIZATION_NONE is not set
 # CONFIG_LOG_BOOTLOADER_LEVEL_NONE is not set
 # CONFIG_LOG_BOOTLOADER_LEVEL_ERROR is not set
@@ -3370,6 +3720,8 @@ CONFIG_TIMER_TASK_STACK_DEPTH=2048
 CONFIG_TIMER_QUEUE_LENGTH=10
 # CONFIG_ENABLE_STATIC_TASK_CLEAN_UP_HOOK is not set
 # CONFIG_HAL_ASSERTION_SILIENT is not set
+# CONFIG_MBEDTLS_ATCA_HW_ECDSA_SIGN is not set
+# CONFIG_MBEDTLS_ATCA_HW_ECDSA_VERIFY is not set
 CONFIG_ESP32_PTHREAD_TASK_PRIO_DEFAULT=5
 CONFIG_ESP32_PTHREAD_TASK_STACK_SIZE_DEFAULT=3072
 CONFIG_ESP32_PTHREAD_STACK_MIN=768

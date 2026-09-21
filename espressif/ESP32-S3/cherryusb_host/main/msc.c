@@ -19,7 +19,7 @@
 #include "usbh_core.h"
 #include "usbh_msc.h"
 
-static char *TAG = "MSC";
+static char *TAG = __FILE_NAME__;
 
 #define DRIVE_STR_LEN 3
 
