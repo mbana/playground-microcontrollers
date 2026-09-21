@@ -23,3 +23,7 @@ source ~/.espressif/tools/activate_idf_v6.1.sh
 
 <https://circuitpython.org/board/yd_esp32_s3_n16r8/>
 
+---
+
+<https://components.espressif.com/components/espressif/iot_usbh_cdc/versions/3.1.0/examples/usb_cdc_basic?language=en>.
+See `usb_cdc_basic`.

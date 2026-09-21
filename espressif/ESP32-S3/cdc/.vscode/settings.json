@@ -1,16 +1,18 @@
 {
   "idf.currentSetup": "/home/mbana/.espressif/master/esp-idf",
-  "idf.customExtraVars": {},
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
   "idf.openOcdConfigs": [
-    "board/esp32s3-bridge.cfg"
+    "board/esp32s3-builtin.cfg"
   ],
   "idf.flashType": "UART",
   "idf.port": "/dev/ttyACM0",
-  "clangd.path": "/usr/bin/clangd",
+  "clangd.path": "/home/mbana/.espressif/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=${workspaceFolder}/build"
+    "--compile-commands-dir=/home/mbana/dev/github/mbana/playground-microcontrollers/espressif/ESP32-S3/cdc/build"
   ],
   "editor.formatOnSave": false,
   "[c]": {
@@ -28,9 +30,5 @@
   "idf.showOnboardingOnInit": true,
   "idf.saveLastProjectConfiguration": true,
   "idf.enableIdfComponentManager": true,
-  "idf.extensionActivationMode": "always",
-  "idf.sdkconfigDefaults": [
-    "sdkconfig.esp32_s3_devkitc_1"
-  ],
-  "idf.enableCCache": true
+  "idf.extensionActivationMode": "always"
 }

@@ -1,0 +1,10 @@
+{
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3",
+    "ADF_PATH": "/home/mbana/.espressif/tools/esp-adf"
+  },
+  "idf.port": "/dev/ttyACM0",
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ]
+}

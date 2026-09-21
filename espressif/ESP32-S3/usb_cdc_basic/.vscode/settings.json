@@ -1,0 +1,29 @@
+{
+  "idf.currentSetup": "/home/mbana/.espressif/master/esp-idf",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3",
+    "ADF_PATH": "/home/mbana/.espressif/tools/esp-adf"
+  },
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "idf.flashType": "UART",
+  "idf.port": "/dev/ttyACM0",
+  "editor.formatOnSave": false,
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "clang-format.vscode-clang-format"
+  },
+  "clang-format.executable": "/usr/bin/clang-format",
+  "clang-format.fallbackStyle": "LLVM",
+  "clang-format.language.c.enable": true,
+  "clang-format.language.cpp.enable": true,
+  "idf.notificationMode": "All",
+  "idf.useIDFKconfigStyle": true,
+  "idf.showOnboardingOnInit": true,
+  "idf.saveLastProjectConfiguration": true,
+  "idf.enableIdfComponentManager": true,
+  "idf.extensionActivationMode": "always"
+}

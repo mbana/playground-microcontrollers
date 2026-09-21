@@ -23,6 +23,24 @@ dependencies:
       registry_url: https://components.espressif.com
       type: service
     version: 0.5.3
+  espressif/esp_bsp_devkit:
+    component_hash: 5f0719d45754228ee18436f176588a49735f2c48d9eadeebb02a2aca626fe4d9
+    dependencies:
+    - name: espressif/button
+      registry_url: https://components.espressif.com
+      require: public
+      version: ^4
+    - name: idf
+      require: private
+      version: '>=5.2'
+    - name: espressif/led_indicator
+      registry_url: https://components.espressif.com
+      require: public
+      version: ~2.0
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 3.0.3
   espressif/esp_bsp_generic:
     component_hash: 8445d95cf246aae6afe83197cd84b9fbfe17ef443ffd0bab23a855508a6cf820
     dependencies:
@@ -195,6 +213,25 @@ dependencies:
       registry_url: https://components.espressif.com
       type: service
     version: 2.9.0
+  espressif/esp_tinyusb:
+    component_hash: 6f1f0c140990bf27a86611e3c1f47f9fa8468bffc3bf1eb6d551cb09f31f8908
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    - name: espressif/tinyusb
+      registry_url: https://components.espressif.com
+      require: public
+      version: '>=0.17.0~2'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    targets:
+    - esp32s2
+    - esp32s3
+    - esp32p4
+    - esp32h4
+    version: 2.0.1~1
   espressif/led_indicator:
     component_hash: d6bc9ee6770ed802b7a44a793bde0c7de4904d5d3c5ec1f363e2b4e1cda79bac
     dependencies:
@@ -223,6 +260,22 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 3.0.3
+  espressif/tinyusb:
+    component_hash: 16c8d774dab1f484d3e0c0f61105624d2424bbae864efd19818baf7b451b41e7
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    targets:
+    - esp32s2
+    - esp32s3
+    - esp32p4
+    - esp32h4
+    - esp32s31
+    version: 0.21.0~2
   espressif/usb:
     component_hash: 6c2cff118141dbbca181d0d27d71801fdddfc78f7ac03ae43f6e5a8cbd89cb99
     dependencies:
@@ -300,6 +353,17 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 2.1.1
+  espressif/usb_host_vcp:
+    component_hash: af3484b5424231ff3102e149ea6f1146e97faa9fbbe0af3684d234f10d1a919e
+    dependencies:
+    - name: espressif/usb_host_cdc_acm
+      registry_url: https://components.espressif.com
+      require: public
+      version: '>=1.0.4,<3.0.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.0.0~6
   idf:
     source:
       type: idf
@@ -312,12 +376,16 @@ dependencies:
       type: service
     version: 9.5.0
 direct_dependencies:
+- espressif/esp_bsp_devkit
 - espressif/esp_bsp_generic
+- espressif/esp_tinyusb
 - espressif/led_strip
 - espressif/usb_host_cdc_acm
 - espressif/usb_host_ch34x_vcp
 - espressif/usb_host_cp210x_vcp
 - espressif/usb_host_ftdi_vcp
-manifest_hash: 34deb7124bdfd991f1726590cb93898094013f8c946deb8a3e0f2b6ac1918536
+- espressif/usb_host_vcp
+- idf
+manifest_hash: 33f68a9e08926023e4b7d173401c5e8d57e64d98b708f22777c4ccbb9d5c2361
 target: esp32s3
 version: 3.0.0
