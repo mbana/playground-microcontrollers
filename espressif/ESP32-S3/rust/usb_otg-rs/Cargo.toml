@@ -10,50 +10,37 @@ path = "./src/bin/main.rs"
 target = "xtensa-esp32s3-none-elf"
 
 [dependencies]
-embassy-executor = { version = "0.10.0" } # features = ["platform-spin", "executor-thread"]
-embassy-futures = "0.1.2"
-embassy-usb-driver = "0.2.2"
-embassy-usb-synopsys-otg = "0.4.0"
+embassy-executor = "0.10.0"
+embassy-usb-host = { version = "0.1.0", default-features = false }
 esp-backtrace = { version = "0.17.0", features = [
     "panic-handler",
     "println",
     "esp32s3",
 ] }
 esp-bootloader-esp-idf = { version = "0.6.0", features = ["esp32s3", "log-04"] }
-# esp-hal = { version = "1.0.0", features = [
-#     "log-04",
-#     "unstable",
-#     "__usb_otg",
-#     "esp32s3",
-# ] }
-esp-hal = { version = "~1.2.2", features = [
+esp-hal = { version = "1.0.0", features = [
     "esp32s3",
     "log-04",
     "unstable",
     "__usb_otg",
 ] }
-esp-println = { version = "0.15.0", features = ["esp32s3", "log-04"] }
 esp-rtos = { version = "0.4.0", features = ["esp32s3", "log-04", "embassy"] }
-log = "0.4.34"
-static_cell = "2.1.1"
-usb-device = "0.3.2"
-usbd-serial = "0.2.2"
+esp-println = { version = "0.15.0", features = ["esp32s3", "log-04"] }
+log = "0.4"
+esp-sync = { version = "0.1.1", features = ["esp32s3", "log-04"] }
 
 [features]
 esp32s3 = [
     "esp-backtrace/esp32s3",
     "esp-bootloader-esp-idf/esp32s3",
-    "esp-hal/esp32s3",
+    "esp-rtos/esp32s3",
+    "esp-println/esp32s3",
+    "esp-sync/esp32s3",
+    "esp-hal/esp32s3"
 ]
 
 [profile.release]
-debug = true
+debug            = true
 debug-assertions = true
-lto = "fat"
-codegen-units = 1
-
-# For fine tuning these settings, please refer to https://doc.rust-lang.org/cargo/reference/profiles.html
-[profile.dev]
-# The default debug profile is too slow and too big for resource-constrained devices.
-# Always build with some optimizations enabled.
-opt-level = "s"
+lto              = "fat"
+codegen-units    = 1

@@ -1,4 +1,5 @@
 # Keep user/runtime configuration values in this file.
 [env]
-ESP_LOG="verbose"
-CONFIG_LOG_MASTER_LEVEL="verbose"
+ESP_LOG="Info"
+CONFIG_LOG_MASTER_LEVEL="Info"
+ESP_LOG_COLORS="1"

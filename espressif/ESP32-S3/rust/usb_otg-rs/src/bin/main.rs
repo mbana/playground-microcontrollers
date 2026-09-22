@@ -1,89 +1,108 @@
-//! CDC-ACM serial port example using polling in a busy loop.
+//! USB HID host example using embassy-usb-host.
 //!
 //! This example should be built in release mode.
 //!
+//! Connect a mouse or keyboard to the USB port, and it will log raw HID input reports to the
+//! console.
+//!
 //! The following wiring is assumed:
-//! - DP => GPIO20
-//! - DM => GPIO19
+//! - DP => GPIO20 (GPIO27 on ESP32-P4)
+//! - DM => GPIO19 (GPIO26 on ESP32-P4)
+
+//% CHIP_FILTER: usb_otg_driver_supported
 
 #![no_std]
 #![no_main]
 
+use embassy_executor::Spawner;
+use embassy_usb_host::{BusRoute, BusState, class::hid::HidHost};
+use esp_backtrace as _;
+use esp_hal::{
+    timer::timg::TimerGroup,
+    usb::otg::{Usb, embassy_usb_host::Driver},
+};
+use log::*;
+
 esp_bootloader_esp_idf::esp_app_desc!();
 
-use embassy_executor;
-use embassy_usb_driver::host::{UsbHostAllocator, UsbHostController};
-use esp_backtrace as _;
-use esp_hal::peripherals::{self, GPIO18};
-use esp_hal::usb::otg::embassy_usb_host::*;
-use esp_hal::{
-    gpio::{Io, Level, Output, OutputConfig},
-    usb::otg::{Usb, embassy_usb_host},
-};
-use esp_println::{print, println};
-use esp_rtos::{embassy, main};
-use log::LevelFilter;
-use static_cell::StaticCell;
-// use embassy_futures::select::select;
-use core::cell::RefCell;
+#[esp_rtos::main]
+async fn main(_spawner: Spawner) {
+    esp_println::println!("Init!");
 
-static EXECUTOR: StaticCell<esp_rtos::embassy::Executor> = StaticCell::new();
-
-// use esp_hal::{
-//     clock::CpuClock,
-//     gpio::{Io, Level, Output, OutputConfig},
-//     // main,
-//     time::{Duration, Instant},
-// };
-
-// // You need a panic handler. Usually, you would use esp_backtrace, panic-probe, or
-// // something similar, but you can also bring your own like this:
-// #[panic_handler]
-// fn panic(_: &core::panic::PanicInfo) -> ! {
-//     esp_hal::system::software_reset()
-// }
-
-#[embassy_executor::task]
-async fn task_device_events(mut driver: Driver<'static>) -> () {
-    println!("waiting for device events ...");
-
-    // let device_event = driver.wait_for_device_event().await;
-    // println!("device_event={:?}", device_event);
-}
-
-#[embassy_executor::task]
-async fn task_toggle_led(pin: GPIO18<'static>) -> () {
-    println!("toggling LED ...");
-
-    // Set GPIO0 as an output, and set its state high initially.
-    let mut led = Output::new(pin, Level::High, OutputConfig::default());
-
-    // let delay = esp_hal::delay::Delay::new();
-    // delay.delay_millis(5000);
-    // led.toggle();
-}
-
-#[main]
-// #[embassy_executor::main]
-async fn main(spawner: embassy_executor::Spawner) {
-    esp_println::logger::init_logger(LevelFilter::Error);
-
-    println!("spawner.executor_id={:?}", spawner.executor_id());
-
-    println!("initializing USB driver ...");
-
+    esp_println::logger::init_logger_from_env();
+    // esp_println::logger::init_logger(LevelFilter::Trace);
     let peripherals = esp_hal::init(esp_hal::Config::default());
-    let usb = Usb::new_fs(peripherals.USB_FS, peripherals.GPIO20, peripherals.GPIO19);
-    let driver = Driver::new(usb);
 
-    let executor: &'static mut esp_rtos::embassy::Executor = EXECUTOR.init(esp_rtos::embassy::Executor::default());
-    executor.run(|spawner: embassy_executor::Spawner| -> () {
-        println!("spawner.executor_id={:?}", spawner.executor_id());
+    let timg0 = TimerGroup::new(peripherals.TIMG0);
+    esp_rtos::start(timg0.timer0, peripherals.FROM_CPU_INTR0);
 
-        let device_events = task_device_events(driver).expect("task_device_events to be ok");
-        spawner.spawn(device_events);
+    let (dp, dm) = cfg_select! {
+        // feature = "esp32p4" => (peripherals.GPIO27, peripherals.GPIO26),
+        _ => (peripherals.GPIO20, peripherals.GPIO19),
+    };
+    let usb = Usb::new_fs(peripherals.USB_FS, dp, dm);
+    static BUS_STATE: BusState = BusState::new();
+    let (mut bus_ctrl, bus) = embassy_usb_host::bus(Driver::new(usb), &BUS_STATE);
+    info!("USB host initialized, waiting for device...");
 
-        let toggle_led = task_toggle_led(peripherals.GPIO18).expect("task_toggle_led to be ok");
-        spawner.spawn(toggle_led);
-    });
+    loop {
+        // Wait for a device to connect
+        let speed = bus_ctrl.wait_for_connection().await;
+        info!("Device connected at speed {:?}", speed);
+
+        // Enumerate the device
+        let mut config_buf = [0u8; 256];
+        let result = bus
+            .enumerate(BusRoute::Direct(speed), &mut config_buf)
+            .await;
+
+        let (enum_info, config_len) = match result {
+            Ok(r) => r,
+            Err(e) => {
+                error!("Enumeration failed: {:?}", e);
+                continue;
+            }
+        };
+
+        info!(
+            "Enumerated: VID={:04x} PID={:04x} addr={}",
+            enum_info.device_desc.vendor_id,
+            enum_info.device_desc.product_id,
+            enum_info.device_address
+        );
+
+        // Try to create a HID host driver
+        let mut hid = match HidHost::new(&bus, &config_buf[..config_len], &enum_info) {
+            Ok(h) => h,
+            Err(e) => {
+                error!("HID init failed: {:?}", e);
+                continue;
+            }
+        };
+
+        // Disable idle repeat (STALL-tolerant: some devices don't support SET_IDLE)
+        if let Err(e) = hid.set_idle(0, 0).await {
+            error!("SET_IDLE failed: {:?}", e);
+            continue;
+        }
+
+        info!("HID device ready, reading reports...");
+
+        // Read loop: log raw HID input reports
+        let mut buf = [0u8; 64];
+        loop {
+            match hid.read(&mut buf).await {
+                Ok(n) if n > 0 => {
+                    info!("HID report: {:x?}", &buf[..n]);
+                }
+                Ok(_) => {}
+                Err(e) => {
+                    error!("HID read failed: {:?}", e);
+                    break;
+                }
+            }
+        }
+
+        info!("Device disconnected, waiting for next...");
+    }
 }
