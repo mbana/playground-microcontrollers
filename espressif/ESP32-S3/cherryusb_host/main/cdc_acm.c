@@ -161,7 +161,8 @@ static void usbh_cdc_acm_printf_task(void *arg)
             continue;
         }
         ESP_LOGI(TAG, "Data received");
-        ESP_LOG_BUFFER_HEXDUMP(TAG, data, length, ESP_LOG_INFO);
+        // ESP_LOG_BUFFER_HEXDUMP(TAG, data, length, ESP_LOG_INFO);
+        ESP_LOGI(TAG, "%.*s", (int)length, data);
         vRingbufferReturnItem(s_recv_ringbuf, (void *)data);
         fflush(stdout);
     }
@@ -204,7 +205,7 @@ void usbh_cdc_acm_run(struct usbh_cdc_acm *cdc_acm_class)
     usbh_cdc_acm_set_line_coding(cdc_acm_class, &linecoding);
 
     serial_start_in(serial);
-    const char data[]  = "CDC: Hello, world!\r\n";
+    const char data[]  = "logread -f\r\n";
     serial_out(serial, (uint8_t *)data, sizeof(data), 1000);
 }
 
