@@ -2,14 +2,15 @@
 include = ["esp-config.toml"]
 
 [target.xtensa-esp32s3-none-elf]
-runner = "espflash flash --monitor --chip esp32s3"
+#--flash-freq 80mhz --flash-mode qio --flash-size 16mb
+# 3000000 => 3Mbps
+runner = "espflash flash --non-interactive --monitor --chip esp32s3 --port /dev/ttyACM0 --baud 3000000 --flash-freq 80mhz"
 
 [build]
+target = "xtensa-esp32s3-none-elf"
 rustflags = [
   "-C", "link-arg=-nostartfiles",
 ]
-
-target = "xtensa-esp32s3-none-elf"
 
 [unstable]
 build-std = ["core", "alloc"]

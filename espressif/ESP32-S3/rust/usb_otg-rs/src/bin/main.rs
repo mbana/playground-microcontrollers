@@ -11,67 +11,79 @@
 
 esp_bootloader_esp_idf::esp_app_desc!();
 
-use esp_println::{print, println};
+use embassy_executor;
+use embassy_usb_driver::host::{UsbHostAllocator, UsbHostController};
 use esp_backtrace as _;
-use esp_hal::usb::otg::{Usb, embassy_usb_host};
+use esp_hal::peripherals::{self, GPIO18};
+use esp_hal::usb::otg::embassy_usb_host::*;
 use esp_hal::{
-    main,
-    usb::otg::embassy_usb_host::*,
+    gpio::{Io, Level, Output, OutputConfig},
+    usb::otg::{Usb, embassy_usb_host},
 };
-use embassy_usb_driver::host::{self, UsbHostAllocator, UsbHostController};
-use embassy_usb_synopsys_otg::{
-    // otg_v1::Otg,
-};
+use esp_println::{print, println};
+use esp_rtos::{embassy, main};
+use log::LevelFilter;
+use static_cell::StaticCell;
+// use embassy_futures::select::select;
+use core::cell::RefCell;
+
+static EXECUTOR: StaticCell<esp_rtos::embassy::Executor> = StaticCell::new();
+
+// use esp_hal::{
+//     clock::CpuClock,
+//     gpio::{Io, Level, Output, OutputConfig},
+//     // main,
+//     time::{Duration, Instant},
+// };
+
+// // You need a panic handler. Usually, you would use esp_backtrace, panic-probe, or
+// // something similar, but you can also bring your own like this:
+// #[panic_handler]
+// fn panic(_: &core::panic::PanicInfo) -> ! {
+//     esp_hal::system::software_reset()
+// }
+
+#[embassy_executor::task]
+async fn task_device_events(mut driver: Driver<'static>) -> () {
+    println!("waiting for device events ...");
+
+    // let device_event = driver.wait_for_device_event().await;
+    // println!("device_event={:?}", device_event);
+}
+
+#[embassy_executor::task]
+async fn task_toggle_led(pin: GPIO18<'static>) -> () {
+    println!("toggling LED ...");
+
+    // Set GPIO0 as an output, and set its state high initially.
+    let mut led = Output::new(pin, Level::High, OutputConfig::default());
+
+    // let delay = esp_hal::delay::Delay::new();
+    // delay.delay_millis(5000);
+    // led.toggle();
+}
 
 #[main]
-fn main() -> ! {
-    esp_println::logger::init_logger_from_env();
+// #[embassy_executor::main]
+async fn main(spawner: embassy_executor::Spawner) {
+    esp_println::logger::init_logger(LevelFilter::Error);
 
-    let mut peripherals = esp_hal::init(esp_hal::Config::default());
-    let mut usb = Usb::new_fs(peripherals.USB_FS, peripherals.GPIO20, peripherals.GPIO19);
-    let mut driver = Driver::new(usb);
-    
-    // let mut host_controller = UsbHostController::allocator(&driver);
-    
-    // let mut controller = UsbHostController::allocator(&driver);
-    // controller.wait_for_device_event().await();
+    println!("spawner.executor_id={:?}", spawner.executor_id());
 
-    loop {
-        println!("looping forever ...");
-        let delay = esp_hal::time::Duration::from_millis(1000);
-        while esp_hal::time::Instant::now().elapsed() < delay {
-            print!(".");
-        }
-        println!()
-    }
+    println!("initializing USB driver ...");
 
-    // loop {
-    //     if !usb_dev.poll(&mut [&mut serial]) {
-    //         continue;
-    //     }
+    let peripherals = esp_hal::init(esp_hal::Config::default());
+    let usb = Usb::new_fs(peripherals.USB_FS, peripherals.GPIO20, peripherals.GPIO19);
+    let driver = Driver::new(usb);
 
-    //     let mut buf = [0u8; 64];
+    let executor: &'static mut esp_rtos::embassy::Executor = EXECUTOR.init(esp_rtos::embassy::Executor::default());
+    executor.run(|spawner: embassy_executor::Spawner| -> () {
+        println!("spawner.executor_id={:?}", spawner.executor_id());
 
-    //     match serial.read(&mut buf) {
-    //         Ok(count) if count > 0 => {
-    //             // Echo back in upper case
-    //             for c in buf[0..count].iter_mut() {
-    //                 if 0x61 <= *c && *c <= 0x7a {
-    //                     *c &= !0x20;
-    //                 }
-    //             }
+        let device_events = task_device_events(driver).expect("task_device_events to be ok");
+        spawner.spawn(device_events);
 
-    //             let mut write_offset = 0;
-    //             while write_offset < count {
-    //                 match serial.write(&buf[write_offset..count]) {
-    //                     Ok(len) if len > 0 => {
-    //                         write_offset += len;
-    //                     }
-    //                     _ => {}
-    //                 }
-    //             }
-    //         }
-    //         _ => {}
-    //     }
-    // }
+        let toggle_led = task_toggle_led(peripherals.GPIO18).expect("task_toggle_led to be ok");
+        spawner.spawn(toggle_led);
+    });
 }

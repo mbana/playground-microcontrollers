@@ -7,8 +7,11 @@ version = "0.1.0"
 [[bin]]
 name = "usb_otg-rs"
 path = "./src/bin/main.rs"
+target = "xtensa-esp32s3-none-elf"
 
 [dependencies]
+embassy-executor = { version = "0.10.0" } # features = ["platform-spin", "executor-thread"]
+embassy-futures = "0.1.2"
 embassy-usb-driver = "0.2.2"
 embassy-usb-synopsys-otg = "0.4.0"
 esp-backtrace = { version = "0.17.0", features = [
@@ -30,6 +33,9 @@ esp-hal = { version = "~1.2.2", features = [
     "__usb_otg",
 ] }
 esp-println = { version = "0.15.0", features = ["esp32s3", "log-04"] }
+esp-rtos = { version = "0.4.0", features = ["esp32s3", "log-04", "embassy"] }
+log = "0.4.34"
+static_cell = "2.1.1"
 usb-device = "0.3.2"
 usbd-serial = "0.2.2"
 
