@@ -566,6 +566,7 @@ dependencies = [
  "embassy-usb-driver",
  "embedded-io-async 0.7.0",
  "heapless 0.9.3",
+ "log",
  "zerocopy",
 ]
 
@@ -1951,14 +1952,21 @@ name = "usb_otg-rs"
 version = "0.1.0"
 dependencies = [
  "embassy-executor",
+ "embassy-futures",
+ "embassy-sync 0.8.0",
+ "embassy-usb",
+ "embassy-usb-driver",
  "embassy-usb-host",
+ "embassy-usb-synopsys-otg",
  "esp-backtrace",
  "esp-bootloader-esp-idf",
  "esp-hal",
  "esp-println",
  "esp-rtos",
  "esp-sync 0.1.1",
+ "heapless 0.9.3",
  "log",
+ "static_cell",
 ]
 
 [[package]]
